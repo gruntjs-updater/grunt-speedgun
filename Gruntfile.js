@@ -1,0 +1,63 @@
+/*
+ * grunt-speedgun
+ * https://github.com/lggarrison/grunt-speedgun
+ *
+ * Copyright (c) 2015 Lacy Garrison
+ * Licensed under the MIT license.
+ */
+
+'use strict';
+
+module.exports = function(grunt) {
+
+    // Project configuration.
+    grunt.initConfig({
+
+        shell: {
+            speedgun: {
+                command: function(speedgunCommand) {
+                    speedgunCommand = speedgunCommand.replace(/\{colon\}/g, ":");
+                    grunt.log.writeln(speedgunCommand);
+                    return speedgunCommand;
+                }
+            }
+        },
+
+        jshint: {
+            all: [
+                'Gruntfile.js',
+                'tasks/*.js',
+            ],
+            options: {
+                jshintrc: '.jshintrc'
+            }
+        },
+
+        speedgun: {
+            default_options: {
+                options: {
+                    url: 'http\://localhost',
+                    port: '4000'
+                }
+            },
+            custom_options: {
+                options: {
+                    url: 'http\://localhost',
+                    port: '4001'
+                }
+            }
+        },
+
+    });
+
+    grunt.loadTasks('tasks');
+
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks("grunt-shell");
+
+    grunt.registerTask('test', ['speedgun']);
+
+    grunt.registerTask('default ', ['jshint', 'test']);
+
+};
