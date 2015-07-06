@@ -28,13 +28,18 @@ module.exports = function(grunt) {
             ];
 
             for (var i = 0, l = targetDirs.length; i < l; i++) {
+
                 var dir = targetDirs[i];
+
                 try {
-                    fs.lstatSync(dir);
-                    return dir;
+                    var stats = fs.lstatSync(dir);
+                    if (stats.isDirectory()) {
+                        return dir;
+                    }
                 } catch (e) {
                     console.log(e);
                 }
+
             }
 
             return false;
