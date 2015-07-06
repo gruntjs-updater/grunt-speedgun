@@ -56,10 +56,10 @@ Optional. The Limit of the number of rows of the report to display to console.
 ```js
 grunt.initConfig({
   speedgun: {
-    options: {
-        url: 'http://localhost',
-        port: '4000',
-        limit: 5
+    localhost: {
+        options: {
+            port: 4000
+        }
     }
   }
 });
