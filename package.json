@@ -1,7 +1,7 @@
 {
   "name": "grunt-speedgun",
   "description": "Automate running Speedgun with Grunt",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/lggarrison/grunt-speedgun",
   "author": "Lacy Garrison <lggarrison@me.com>",
   "repository": {
