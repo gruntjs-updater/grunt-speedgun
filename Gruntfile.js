@@ -37,14 +37,14 @@ module.exports = function(grunt) {
             default_options: {
                 options: {
                     url: 'http://localhost',
-                    port: '4000',
+                    port: 4000,
                     limit: 5
                 }
             },
             custom_options: {
                 options: {
                     url: 'http://localhost',
-                    port: '4001',
+                    port: 4001,
                     limit: 5
                 }
             },
