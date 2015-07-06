@@ -36,14 +36,21 @@ module.exports = function(grunt) {
         speedgun: {
             default_options: {
                 options: {
-                    url: 'http\://localhost',
-                    port: '4000'
+                    url: 'http://localhost',
+                    port: '4000',
+                    limit: 5
                 }
             },
             custom_options: {
                 options: {
-                    url: 'http\://localhost',
-                    port: '4001'
+                    url: 'http://localhost',
+                    port: '4001',
+                    limit: 5
+                }
+            },
+            custom_options2: {
+                options: {
+                    url: 'http://bloomberg.com'
                 }
             }
         },
