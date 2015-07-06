@@ -13,16 +13,6 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
 
-        shell: {
-            speedgun: {
-                command: function(speedgunCommand) {
-                    speedgunCommand = speedgunCommand.replace(/\{colon\}/g, ":");
-                    grunt.log.writeln(speedgunCommand);
-                    return speedgunCommand;
-                }
-            }
-        },
-
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -61,7 +51,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks("grunt-shell");
 
     grunt.registerTask('test', ['speedgun']);
 

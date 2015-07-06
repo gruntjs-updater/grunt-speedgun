@@ -11,12 +11,16 @@
 var fs = require("fs");
 var csv = require('csv');
 var Table = require('cli-table');
+var f = require('util').format;
+var spawn = require('child_process').spawn;
 
 module.exports = function(grunt) {
 
     var options = null;
 
     grunt.registerMultiTask('speedgun', 'Automate running Speedgun with Grunt', function() {
+
+        var done = this.async();
 
         // Merge task-specific and/or target-specific options with these defaults.
         options = this.options({
@@ -25,17 +29,37 @@ module.exports = function(grunt) {
             limit: 10
         });
 
-        grunt.loadNpmTasks('grunt-shell');
-
-        var speedgunCommand = 'phantomjs --config=node_modules/speedgun/core/pconfig.json node_modules/speedgun/core/speedgun.js ' + options.url;
+        var server = options.url;
         if (options.port !== null) {
-            speedgunCommand += '\:' + options.port;
+            server += '\:' + options.port;
         }
-        speedgunCommand += ' -o csv --screenshot';
 
-        speedgunCommand = speedgunCommand.replace(/:/g, "{colon}");
+        //kick off process
+        var child = spawn('phantomjs', [
+            '--config=node_modules/speedgun/core/pconfig.json',
+            'node_modules/speedgun/core/speedgun.js',
+            server,
+            '-o',
+            'csv',
+            '--screenshot'
+        ]);
 
-        grunt.task.run(['shell:speedgun:' + speedgunCommand, 'speedgun-report']);
+        //spit stdout to screen
+        child.stdout.on('data', function(data) {
+            process.stdout.write(data.toString());
+        });
+
+        //spit stderr to screen
+        child.stderr.on('data', function(data) {
+            process.stdout.write(data.toString());
+            done();
+        });
+
+        child.on('close', function(code) {
+            console.log("Finished with code " + code);
+            grunt.task.run(['speedgun-report']);
+            done();
+        });
 
     });
 

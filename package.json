@@ -25,7 +25,6 @@
         "test": "grunt test"
     },
     "dependencies": {
-        "grunt-shell": "~1.1.2",
         "speedgun": "wesleyhales/speedgun",
         "csv": "0.4.5",
         "cli-table": "0.3.1"
