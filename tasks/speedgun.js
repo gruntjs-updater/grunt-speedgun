@@ -20,6 +20,27 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('speedgun', 'Automate running Speedgun with Grunt', function() {
 
+        function findSpeedgunDirectory() {
+
+            var targetDirs = [
+                'node_modules/speedgun',
+                'node_modules/grunt-speedgun/node_modules/speedgun'
+            ];
+
+            for (var i = 0, l = targetDirs.length; i < l; i++) {
+                var dir = targetDirs[i];
+                try {
+                    fs.lstatSync(dir);
+                    return dir;
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+
+            return false;
+
+        }
+
         var done = this.async();
 
         // Merge task-specific and/or target-specific options with these defaults.
@@ -34,10 +55,17 @@ module.exports = function(grunt) {
             server += '\:' + options.port;
         }
 
+        var speedgunDir = findSpeedgunDirectory();
+
+        if (speedgunDir === false) {
+            grunt.fail.fatal("Cannot find speedgun");
+            done();
+        }
+
         //kick off process
         var child = spawn('phantomjs', [
-            '--config=node_modules/speedgun/core/pconfig.json',
-            'node_modules/speedgun/core/speedgun.js',
+            '--config=' + speedgunDir + '/core/pconfig.json',
+            speedgunDir + '/core/speedgun.js',
             server,
             '-o',
             'csv',
