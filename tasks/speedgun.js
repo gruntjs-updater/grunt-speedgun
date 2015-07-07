@@ -136,7 +136,8 @@ module.exports = function(grunt) {
             parser.on('finish', function() {
 
                 var d = new Date();
-                for (var i = (output.length > options.limit) ? output.length - options.limit : 0; i < output.length; i++) {
+                var outputLength = output.length;
+                for (var i = (outputLength > options.limit) ? outputLength - options.limit : 0; i < outputLength; i++) {
                     record = output[i];
                     d.setTime(record.nowms);
                     table.push([
@@ -150,14 +151,10 @@ module.exports = function(grunt) {
                     ]);
                 }
 
-                console.log("");
-                console.log("");
-                console.log("");
-                console.log("Page Loading Speeds: SpeedGun");
+                console.log('\n\n\n');
+                console.log('Page Loading Speeds: SpeedGun');
                 console.log(table.toString());
-                console.log("");
-                console.log("");
-                console.log("");
+                console.log('\n\n\n');
                 done();
 
             });
