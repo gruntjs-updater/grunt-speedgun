@@ -55,6 +55,10 @@ module.exports = function(grunt) {
             limit: 10
         });
 
+        if (typeof(options.port) === 'string') {
+            options.port = parseInt(options.port);
+        }
+
         var server = options.url;
         if (options.port !== null) {
             server += '\:' + options.port;
